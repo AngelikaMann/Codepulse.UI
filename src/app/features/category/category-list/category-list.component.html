@@ -1,0 +1,36 @@
+<div class="container">
+  <h1 class="mt-3">Category List</h1>
+  <div class="d-flex mt-3 justify-content-end">
+    <a
+      [routerLink]="['/admin/categories/add']"
+      routerLinkActive="router-link-active"
+      class="btn btn-primary"
+      >Add Category</a
+    >
+  </div>
+
+  @if(categories$ | async)
+   {
+  <ng-container>
+    <table class="table table-bordered mt-3">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Name</th>
+          <th>Url Handle</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for(category of (categories$ | async)  ; track $index )
+         {
+        <tr>
+          <td>{{ category.id }}</td>
+          <td>{{ category.name }}</td>
+          <td>{{ category.urlHandle }}</td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </ng-container>
+ }
+</div>

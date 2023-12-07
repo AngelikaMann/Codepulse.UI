@@ -1,3 +1,16 @@
-import { Routes } from '@angular/router';
+import { Routes , RouterModule} from '@angular/router';
+import { CategoryListComponent } from './features/category/category-list/category-list.component';
+import { NgModule } from '@angular/core';
+import path from 'path';
+import { AddCategoryComponent } from './features/category/add-category/add-category.component';
 
-export const routes: Routes = [];
+export const routes: Routes = [
+  { path: 'admin/categories', component: CategoryListComponent},
+  {path: 'admin/categories/add', component: AddCategoryComponent}
+
+];
+NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
+});
+export class AppRoutingModule {}
