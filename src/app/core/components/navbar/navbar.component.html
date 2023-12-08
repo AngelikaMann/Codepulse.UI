@@ -32,12 +32,15 @@
             <li>
               <a class="dropdown-item" [routerLink]="['admin/categories']"  routerLinkActive="active"
               [routerLinkActiveOptions]="{ exact: true }"
-                >Categories</a
-              >
+                >Categories</a>
             </li>
-
-            <!-- <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li> -->
+            <li><hr class="dropdown-divider"></li>
+            <li>
+              <a class="dropdown-item" [routerLink]="['admin/blogposts']"  routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+                >BlogPosts</a>
+            </li>
+            <!-- <li><a class="dropdown-item" href="#">Something else here</a></li> -->
           </ul>
         </li>
       </ul>
