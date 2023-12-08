@@ -6,7 +6,7 @@ import { subscribe } from 'diagnostics_channel';
 import { response } from 'express';
 import { Category } from '../models/category.modal';
 import { FormsModule } from '@angular/forms';
-import { Observable, of } from 'rxjs';
+import { Observable} from 'rxjs';
 
 @Component({
   selector: 'app-category-list',
@@ -16,9 +16,7 @@ import { Observable, of } from 'rxjs';
     FormsModule,
     RouterOutlet,
     RouterLink,
-    RouterLinkActive,
-    AsyncPipe,
-DatePipe
+    RouterLinkActive
   ],
   templateUrl: './category-list.component.html',
   styleUrl: './category-list.component.css',
