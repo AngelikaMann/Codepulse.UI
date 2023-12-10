@@ -1,10 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AddBlogPost } from '../models/add-blog-post.model';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterLinkActive, RouterOutlet,Router } from '@angular/router';
+import {
+  RouterLink,
+  RouterLinkActive,
+  RouterOutlet,
+  Router,
+} from '@angular/router';
 import { BlogPostService } from '../services/blog-post.service';
-
+import { MarkdownModule } from 'ngx-markdown';
+import { HttpClient } from '@angular/common/http';
+import { CategoryService } from '../../category/services/category.service';
+import { Observable } from 'rxjs';
+import { Category } from '../../category/models/category.modal';
 
 @Component({
   selector: 'app-add-blogpost',
@@ -15,13 +24,19 @@ import { BlogPostService } from '../services/blog-post.service';
     RouterLink,
     RouterLinkActive,
     FormsModule,
+    MarkdownModule
   ],
   templateUrl: './add-blogpost.component.html',
   styleUrl: './add-blogpost.component.css',
 })
-export class AddBlogpostComponent {
+export class AddBlogpostComponent  implements OnInit{
   model: AddBlogPost;
-  constructor(private blogPostservice: BlogPostService, private router: Router) {
+  categories$?: Observable<Category[]>;
+  constructor(
+    private blogPostservice: BlogPostService,
+     private categoryService: CategoryService,
+    private router: Router
+  ) {
     this.model = {
       title: '',
       shortDescription: '',
@@ -31,12 +46,17 @@ export class AddBlogpostComponent {
       author: '',
       publishedDate: new Date(),
       isVisible: true,
+      categories:[]
     };
   }
+  ngOnInit(): void {
+this.categories$= this.categoryService.getAllCategories();
+  }
   onFormSubmit(): void {
+    console.log(this.model)
     this.blogPostservice.createBlogPost(this.model).subscribe({
       next: (response) => {
-        this.router.navigateByUrl('/admin/blogposts')
+        this.router.navigateByUrl('/admin/blogposts');
       },
     });
   }
