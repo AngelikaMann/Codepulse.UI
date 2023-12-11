@@ -1,11 +1,12 @@
 <div class="container">
   <h1 mt-3>BlogPost List</h1>
   <div class="d-flex justify-content-end mt-3">
-    <a [routerLink]="['/admin/blogposts/add']" class="btn btn-primary">Add BlogPost</a>
+    <a [routerLink]="['/admin/blogposts/add']" class="btn btn-primary"
+      >Add BlogPost</a
+    >
   </div>
 
-  @if(blogPosts$ | async)
-  {
+  @if(blogPosts$ | async) {
   <ng-container select="selector">
     <table class="table table-hover mt-3">
       <thead>
@@ -14,6 +15,7 @@
           <th>Short Description</th>
           <th>Is Visible?</th>
           <th>Categories</th>
+          <th>Options</th>
         </tr>
       </thead>
       <tbody>
@@ -22,16 +24,18 @@
           <td>{{ blogPost.title }}</td>
           <td>{{ blogPost.shortDescription }}</td>
           <td>{{ blogPost.isVisible }}</td>
-          <td>  @for(category of blogPost.categories ; track $index)
-              {
-            <span >
-
+          <td>
+            @for(category of blogPost.categories ; track $index) {
+            <span>
               <span class="badge bg-secondary mr-2">{{ category.name }} </span>
-
-            </span>   }
+            </span>
+            }
+          </td>
+          <td>
+            <a class="btn btn-light" [routerLink]="['/admin/blogposts', blogPost.id]">Edit</a>
           </td>
         </tr>
-      }
+        }
       </tbody>
     </table>
   </ng-container>
