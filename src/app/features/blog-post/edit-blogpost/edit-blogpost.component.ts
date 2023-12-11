@@ -28,14 +28,16 @@ import {
   styleUrl: './edit-blogpost.component.css',
 })
 export class EditBlogpostComponent implements OnInit, OnDestroy {
+
   id: string | null = null;
   model?: BlogPost;
   categories$?: Observable<Category[]>;
-  selectedCategories?:string[]
+  selectedCategories?:string[];
 
   routeSubscription?: Subscription;
   updateBlogPostSubscription?: Subscription;
   getBlogPostSubscription?: Subscription;
+  deleteBlogPostDescription?:Subscription;
   constructor(
     private route: ActivatedRoute,
     private blogPostService: BlogPostService,
@@ -85,11 +87,22 @@ export class EditBlogpostComponent implements OnInit, OnDestroy {
     });
     }
   }
-
+  onDelete() {
+ if (this.id){
+  //call service and delete blogpost
+  this.deleteBlogPostDescription=this.blogPostService.deleteBlogPost(this.id)
+  .subscribe({
+    next:(response)=>{
+      this.router.navigateByUrl('/admin/blogposts');
+    }
+  });
+ }
+    }
 
   ngOnDestroy(): void {
     this.routeSubscription?.unsubscribe;
     this.updateBlogPostSubscription?.unsubscribe;
     this.getBlogPostSubscription?.unsubscribe;
+    this.deleteBlogPostDescription?.unsubscribe	;
   }
 }
