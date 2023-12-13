@@ -13,31 +13,37 @@ import {
   RouterLink,
   RouterLinkActive,
   RouterOutlet,
-  Router
+  Router,
 } from '@angular/router';
+import { ImageSelectorComponent } from '../../../shared/components/image-selector/image-selector.component';
 
 @Component({
   selector: 'app-edit-blogpost',
   standalone: true,
-  imports: [FormsModule,
+  templateUrl: './edit-blogpost.component.html',
+  styleUrl: './edit-blogpost.component.css',
+  imports: [
+    FormsModule,
     CommonModule,
     RouterOutlet,
     RouterLink,
-    RouterLinkActive],
-  templateUrl: './edit-blogpost.component.html',
-  styleUrl: './edit-blogpost.component.css',
+    RouterLinkActive,
+    ImageSelectorComponent,
+  ],
 })
 export class EditBlogpostComponent implements OnInit, OnDestroy {
 
   id: string | null = null;
   model?: BlogPost;
   categories$?: Observable<Category[]>;
-  selectedCategories?:string[];
+  selectedCategories?: string[];
+isImageSelectorVisible:boolean=false;
+
 
   routeSubscription?: Subscription;
   updateBlogPostSubscription?: Subscription;
   getBlogPostSubscription?: Subscription;
-  deleteBlogPostDescription?:Subscription;
+  deleteBlogPostDescription?: Subscription;
   constructor(
     private route: ActivatedRoute,
     private blogPostService: BlogPostService,
@@ -53,12 +59,14 @@ export class EditBlogpostComponent implements OnInit, OnDestroy {
 
         //Get BlogPost from API
         if (this.id) {
-          this.getBlogPostSubscription=this.blogPostService.getBlogPostById(this.id).subscribe({
-            next: (response) => {
-              this.model = response;
-              this.selectedCategories= response.categories.map(x=>x.id);
-            },
-          });
+          this.getBlogPostSubscription = this.blogPostService
+            .getBlogPostById(this.id)
+            .subscribe({
+              next: (response) => {
+                this.model = response;
+                this.selectedCategories = response.categories.map((x) => x.id);
+              },
+            });
         }
       },
     });
@@ -66,43 +74,51 @@ export class EditBlogpostComponent implements OnInit, OnDestroy {
 
   onFormSubmit(): void {
     //Convert this Model to Request Object
-    if(this.model && this.id){
-      var updateBlogPost: UpdateBlogPost= {
-        author:this.model.author,
+    if (this.model && this.id) {
+      var updateBlogPost: UpdateBlogPost = {
+        author: this.model.author,
         content: this.model.content,
         shortDescription: this.model.shortDescription,
         featuredImageUrl: this.model.featuredImageUrl,
         isVisible: this.model.isVisible,
         publishedDate: this.model.publishedDate,
         title: this.model.title,
-        urlHandle:this.model.urlHandle,
-        categories:this.selectedCategories ?? []
+        urlHandle: this.model.urlHandle,
+        categories: this.selectedCategories ?? [],
       };
 
-    this.updateBlogPostSubscription = this.blogPostService.updateBlogPost(this.id, updateBlogPost)
-    .subscribe({
-      next:(response)=> {
-        this.router.navigateByUrl('/admin/blogposts');
-      }
-    });
+      this.updateBlogPostSubscription = this.blogPostService
+        .updateBlogPost(this.id, updateBlogPost)
+        .subscribe({
+          next: (response) => {
+            this.router.navigateByUrl('/admin/blogposts');
+          },
+        });
     }
   }
   onDelete() {
- if (this.id){
-  //call service and delete blogpost
-  this.deleteBlogPostDescription=this.blogPostService.deleteBlogPost(this.id)
-  .subscribe({
-    next:(response)=>{
-      this.router.navigateByUrl('/admin/blogposts');
+    if (this.id) {
+      //call service and delete blogpost
+      this.deleteBlogPostDescription = this.blogPostService
+        .deleteBlogPost(this.id)
+        .subscribe({
+          next: (response) => {
+            this.router.navigateByUrl('/admin/blogposts');
+          },
+        });
     }
-  });
- }
-    }
+  }
 
+  openImageSelector():void {
+   this.isImageSelectorVisible= true;
+  }
+  closeImageSelector() {
+  this.isImageSelectorVisible=false;
+    }
   ngOnDestroy(): void {
     this.routeSubscription?.unsubscribe;
     this.updateBlogPostSubscription?.unsubscribe;
     this.getBlogPostSubscription?.unsubscribe;
-    this.deleteBlogPostDescription?.unsubscribe	;
+    this.deleteBlogPostDescription?.unsubscribe;
   }
 }
