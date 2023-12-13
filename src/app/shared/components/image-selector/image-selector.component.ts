@@ -14,6 +14,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './image-selector.component.css',
 })
 export class ImageSelectorComponent implements OnInit{
+
   private file?: File;
   fileName: string = '';
   title: string = '';
@@ -42,8 +43,14 @@ export class ImageSelectorComponent implements OnInit{
       });
     }
   }
+
+selectImage(image:BlogImage) {
+this.imageService.selectImage(image);
+  }
+
 private getImages(){
   this.images$= this.imageService.getAllImages();
 }
+
 
 }

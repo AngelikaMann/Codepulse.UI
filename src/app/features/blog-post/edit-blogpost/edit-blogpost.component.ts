@@ -16,6 +16,7 @@ import {
   Router,
 } from '@angular/router';
 import { ImageSelectorComponent } from '../../../shared/components/image-selector/image-selector.component';
+import { ImageService } from '../../../shared/components/image-selector/image.service';
 
 @Component({
   selector: 'app-edit-blogpost',
@@ -32,23 +33,24 @@ import { ImageSelectorComponent } from '../../../shared/components/image-selecto
   ],
 })
 export class EditBlogpostComponent implements OnInit, OnDestroy {
-
   id: string | null = null;
   model?: BlogPost;
   categories$?: Observable<Category[]>;
   selectedCategories?: string[];
-isImageSelectorVisible:boolean=false;
-
+  isImageSelectorVisible: boolean = false;
 
   routeSubscription?: Subscription;
   updateBlogPostSubscription?: Subscription;
   getBlogPostSubscription?: Subscription;
   deleteBlogPostDescription?: Subscription;
+  imageSelectSubscription?: Subscription;
+
   constructor(
     private route: ActivatedRoute,
     private blogPostService: BlogPostService,
     private categoryService: CategoryService,
-    private router: Router
+    private router: Router,
+    private imageService: ImageService
   ) {}
 
   ngOnInit(): void {
@@ -68,6 +70,14 @@ isImageSelectorVisible:boolean=false;
               },
             });
         }
+        this.imageSelectSubscription=this.imageService.onSelectImage().subscribe({
+          next: (response) => {
+            if (this.model) {
+              this.model.featuredImageUrl = response.url;
+              this.isImageSelectorVisible= false;
+            }
+          },
+        });
       },
     });
   }
@@ -109,16 +119,17 @@ isImageSelectorVisible:boolean=false;
     }
   }
 
-  openImageSelector():void {
-   this.isImageSelectorVisible= true;
+  openImageSelector(): void {
+    this.isImageSelectorVisible = true;
   }
   closeImageSelector() {
-  this.isImageSelectorVisible=false;
-    }
+    this.isImageSelectorVisible = false;
+  }
   ngOnDestroy(): void {
     this.routeSubscription?.unsubscribe;
     this.updateBlogPostSubscription?.unsubscribe;
     this.getBlogPostSubscription?.unsubscribe;
     this.deleteBlogPostDescription?.unsubscribe;
+    this.imageSelectSubscription?.unsubscribe;
   }
 }
