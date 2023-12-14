@@ -29,7 +29,7 @@ import { ImageService } from '../../../shared/components/image-selector/image.se
     RouterOutlet,
     RouterLink,
     RouterLinkActive,
-    ImageSelectorComponent,
+    ImageSelectorComponent
   ],
 })
 export class EditBlogpostComponent implements OnInit, OnDestroy {

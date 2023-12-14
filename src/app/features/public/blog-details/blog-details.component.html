@@ -1,1 +1,31 @@
-<p>blog-details works!</p>
+@if(blogPost$|async ){
+<ng-container>
+  <div class="container">
+    <div class="py-5">
+      <div class="col-12 col-md-8 col-lg-6 mx-auto">
+        <img
+          [src]="(blogPost$ | async)?.featuredImageUrl"
+          [title]="(blogPost$ | async)?.title"
+          class="img-fluid"
+        />
+        <h1 class="mt-4">{{ (blogPost$ | async)?.title }}</h1>
+        <div class="d-flex justify-content-between mt-4">
+          <span>{{ (blogPost$ | async)?.author }}</span>
+          <span>{{
+            (blogPost$ | async)?.publishedDate | date : "dd-MM-yyyy"
+          }}</span>
+        </div>
+        <div class="mt-3">
+           <p>{{ (blogPost$ | async)?.content }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+} @else {
+<div class="text-center mt-5">
+  <div class="spinner-border" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+}
