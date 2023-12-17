@@ -24,10 +24,11 @@
               "node_modules/prismjs/themes/prism-okaidia.css"
             ],
             "scripts": [
-               "node_modules/marked/marked.min.js",
+             
               "node_modules/prismjs/prism.js",
               "node_modules/prismjs/components/prism-csharp.min.js",
               "node_modules/prismjs/components/prism-css.min.js"
+
             ],
             "server": "src/main.server.ts",
             "prerender": true,

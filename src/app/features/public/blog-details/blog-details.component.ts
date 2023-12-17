@@ -4,10 +4,12 @@ import { BlogPostService } from '../../blog-post/services/blog-post.service';
 import { Observable } from 'rxjs';
 import { BlogPost } from '../../blog-post/models/blog-post.model';
 import { CommonModule } from '@angular/common';
+import { MarkdownModule } from 'ngx-markdown';
+
 @Component({
   selector: 'app-blog-details',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MarkdownModule],
   templateUrl: './blog-details.component.html',
   styleUrl: './blog-details.component.css',
 })

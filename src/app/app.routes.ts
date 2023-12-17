@@ -9,6 +9,8 @@ import { AddBlogpostComponent } from './features/blog-post/add-blogpost/add-blog
 import { EditBlogpostComponent } from './features/blog-post/edit-blogpost/edit-blogpost.component';
 import { HomeComponent } from './features/public/home/home.component';
 import { BlogDetailsComponent } from './features/public/blog-details/blog-details.component';
+import { MarkdownModule } from 'ngx-markdown';
+import { LoginComponent } from './features/auth/login/login.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -19,9 +21,10 @@ export const routes: Routes = [
   { path: 'admin/blogposts', component: BlogpostListComponent },
   { path: 'admin/blogposts/add', component: AddBlogpostComponent },
   { path: 'admin/blogposts/:id', component: EditBlogpostComponent },
+  { path: 'login', component: LoginComponent },
 ];
 NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
+  imports: [RouterModule.forRoot(routes),MarkdownModule.forRoot()],
+  exports: [RouterModule, MarkdownModule],
 });
 export class AppRoutingModule {}
