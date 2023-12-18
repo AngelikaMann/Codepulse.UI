@@ -17,25 +17,38 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   model: LoginRequest;
 
-  constructor(private authService:AuthService,
-    private cookieService:CookieService,
-    private router:Router
-    ) {
+  constructor(
+    private authService: AuthService,
+    private cookieService: CookieService,
+    private router: Router
+  ) {
     this.model = {
       email: '',
       password: '',
     };
   }
   ngFormSubmit(): void {
-    this.authService.login(this.model)
-    .subscribe({
-      next:(response)=>{
-       //Set Auth Cookie
-       this.cookieService.set('Authorization',`Bearer ${response.token}`,
-       undefined,'/',undefined,true,'Strict');
-       //Redirect back to Home
-       this.router.navigateByUrl('/');
-      }
+    this.authService.login(this.model).subscribe({
+      next: (response) => {
+        //Set Auth Cookie
+        this.cookieService.set(
+          'Authorization',
+          `Bearer ${response.token}`,
+          undefined,
+          '/',
+          undefined,
+          true,
+          'Strict'
+        );
+        //Set User
+        this.authService.setUser({
+          email: response.email,
+          roles: response.roles,
+        });
+
+        //Redirect back to Home
+        this.router.navigateByUrl('/');
+      },
     });
   }
 }

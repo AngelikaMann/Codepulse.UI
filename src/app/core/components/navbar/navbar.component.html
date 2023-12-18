@@ -30,23 +30,42 @@
           </a>
           <ul class="dropdown-menu">
             <li>
-              <a class="dropdown-item" [routerLink]="['admin/categories']"  routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: true }"
-                >Categories</a>
+              <a
+                class="dropdown-item"
+                [routerLink]="['admin/categories']"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                >Categories</a
+              >
             </li>
-            <li><hr class="dropdown-divider"></li>
+            <li><hr class="dropdown-divider" /></li>
             <li>
-              <a class="dropdown-item" [routerLink]="['admin/blogposts']"  routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: true }"
-                >BlogPosts</a>
+              <a
+                class="dropdown-item"
+                [routerLink]="['admin/blogposts']"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                >BlogPosts</a
+              >
             </li>
             <!-- <li><a class="dropdown-item" href="#">Something else here</a></li> -->
           </ul>
         </li>
       </ul>
       <div class="d-flex">
-        <a [routerLink]="['/login']" class="btn btn-primary">Login</a>
-
+        @if(user===undefined){
+        <ng-container>
+          <a [routerLink]="['/login']" class="btn btn-primary">Login</a>
+        </ng-container>
+        } @else {
+        <ng-container>
+          <div class="d-flex align.items-center">
+            <span>{{ user.email }}</span>
+            <button class="btn btn-primary ms-3" (click)="onLogout()">
+              Logout
+            </button>
+          </div> </ng-container
+        > }
       </div>
     </div>
   </div>
