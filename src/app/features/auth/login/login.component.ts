@@ -31,14 +31,8 @@ export class LoginComponent {
     this.authService.login(this.model).subscribe({
       next: (response) => {
         //Set Auth Cookie
-        this.cookieService.set(
-          'Authorization',
-          `Bearer ${response.token}`,
-          undefined,
-          '/',
-          undefined,
-          true,
-          'Strict'
+        this.cookieService.set('Authorization', `Bearer ${response.token}`,
+          undefined, '/', undefined, true,'Strict'
         );
         //Set User
         this.authService.setUser({

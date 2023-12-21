@@ -13,7 +13,8 @@ import { CookieService } from 'ngx-cookie-service';
 export class AuthService {
   $user = new BehaviorSubject<User | undefined>(undefined);
 
-  constructor(private http: HttpClient, private cookieService: CookieService) {}
+  constructor(private http: HttpClient,
+     private cookieService: CookieService) {}
 
   login(request: LoginRequest): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(
