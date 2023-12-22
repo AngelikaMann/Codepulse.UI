@@ -11,16 +11,17 @@ import { HomeComponent } from './features/public/home/home.component';
 import { BlogDetailsComponent } from './features/public/blog-details/blog-details.component';
 import { MarkdownModule } from 'ngx-markdown';
 import { LoginComponent } from './features/auth/login/login.component';
+import { authGuard } from './features/auth/guards/auth.guard';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'blog/:url', component: BlogDetailsComponent },
-  { path: 'admin/categories', component: CategoryListComponent },
-  { path: 'admin/categories/add', component: AddCategoryComponent },
-  { path: 'admin/categories/:id', component: EditCategoryComponent },
-  { path: 'admin/blogposts', component: BlogpostListComponent },
-  { path: 'admin/blogposts/add', component: AddBlogpostComponent },
-  { path: 'admin/blogposts/:id', component: EditBlogpostComponent },
+  { path: 'admin/categories', component: CategoryListComponent, canActivate:[authGuard] },
+  { path: 'admin/categories/add', component: AddCategoryComponent, canActivate:[authGuard] },
+  { path: 'admin/categories/:id', component: EditCategoryComponent, canActivate:[authGuard] },
+  { path: 'admin/blogposts', component: BlogpostListComponent, canActivate:[authGuard] },
+  { path: 'admin/blogposts/add', component: AddBlogpostComponent, canActivate:[authGuard] },
+  { path: 'admin/blogposts/:id', component: EditBlogpostComponent, canActivate:[authGuard] },
   { path: 'login', component: LoginComponent },
 ];
 NgModule({

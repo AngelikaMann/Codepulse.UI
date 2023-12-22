@@ -3,7 +3,7 @@ import { provideRouter , Routes} from '@angular/router';
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
 import { CategoryListComponent } from './features/category/category-list/category-list.component';
-import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, HttpClient } from '@angular/common/http';
 
 
 
@@ -18,7 +18,7 @@ export const appConfig: ApplicationConfig = {
   providers:
    [provideRouter(routes),
     provideHttpClient(),
-     provideClientHydration()
-
+     provideClientHydration(),
+  
     ]
 };
