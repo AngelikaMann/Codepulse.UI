@@ -1,24 +1,23 @@
 import { ApplicationConfig } from '@angular/core';
-import { provideRouter , Routes} from '@angular/router';
+import { provideRouter, Routes } from '@angular/router';
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
 import { CategoryListComponent } from './features/category/category-list/category-list.component';
-import { HTTP_INTERCEPTORS, provideHttpClient, HttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { authInterceptor } from './core/interceptors/auth.interceptor';
 
-
-
-
-export const AppRoutes: Routes = [{
-  path: 'admin/categories', component: CategoryListComponent
-}
-
+export const AppRoutes: Routes = [
+  {
+    path: 'admin/categories',
+    component: CategoryListComponent,
+  },
 ];
 
 export const appConfig: ApplicationConfig = {
-  providers:
-   [provideRouter(routes),
+  providers: [
+    provideRouter(routes),
     provideHttpClient(),
-     provideClientHydration(),
-  
-    ]
+    provideClientHydration(),
+    provideHttpClient(withInterceptors([authInterceptor])),
+  ],
 };
