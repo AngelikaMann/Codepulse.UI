@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { CategoryService } from '../../category/services/category.service';
 import { Category } from '../../category/models/category.modal';
 import { UpdateBlogPost } from '../models/update-blog-post.model';
+import { MarkdownModule } from 'ngx-markdown';
 import {
   ActivatedRoute,
   RouterLink,
@@ -26,6 +27,7 @@ import { ImageService } from '../../../shared/components/image-selector/image.se
   imports: [
     FormsModule,
     CommonModule,
+    MarkdownModule,
     RouterOutlet,
     RouterLink,
     RouterLinkActive,

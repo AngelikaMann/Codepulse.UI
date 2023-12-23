@@ -39,14 +39,22 @@
         </div>
 
         <div class="mt-3">
-          <label class="form-label" for="content">Content</label>
-          <textarea
-            name="content"
-            id="content"
-            [(ngModel)]="model.content"
-            class="form-control"
-          ></textarea>
+          <label for="content" class="form-label">Content</label>
+
+          <div class="d-flex flex-row">
+            <div class="col-6 p-2">
+              <textarea id="content" name="content" class="form-control" style="height: 350px;max-height: 350px;"
+                [(ngModel)]="model.content">
+            </textarea>
+            </div>
+
+            <div class="col-6 p-2" style="max-height: 350px; overflow-y: scroll;">
+              <markdown [data]="model.content"></markdown>
+            </div>
+          </div>
+
         </div>
+
         <div class="mt-3">
           <label class="form-label" for="featuredImageUrl"
             >Featured Image Url
